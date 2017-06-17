@@ -1,0 +1,66 @@
+<HTML>
+  <HEAD>
+    <meta charset="utf-8">
+    <TITLE>LinkShare Index</TITLE>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="js/lsweb.js"></script>
+  </HEAD>
+
+  <BODY>
+
+    <h1>LinkShare</h1>
+
+    <HR>
+
+    <SPAN ID="linkshare">
+
+      </SPAN>
+    
+    <SCRIPT LANGUAGE="JavaScript">
+<!--
+
+var element_id;
+
+function process_ajax() {
+
+var request_obj = { search: 'Programming', num_entries: 100 };
+
+$.ajax({
+  type: "POST",
+  url: '/cgi-bin/linkshare_processor',
+  data: JSON.stringify(request_obj),
+  success: function(data, textStatus, jqXHR) {
+
+  var entries = $.parseJSON(data);
+
+  element_id.innerHTML = lsweb_draw_table(entries);
+
+}
+});
+
+return 0;
+
+}
+
+// A $( document ).ready() block.
+$( document ).ready(function() {
+
+    console.log( "LinkShare ready!" );
+
+    element_id = document.getElementById("linkshare");
+
+    process_ajax();
+
+});
+
+//-->      
+      </SCRIPT>
+
+    <hr>
+
+    <a href="linkshare_submitform.html">Submit a URL</a> to Link Share.<br>
+    
+  </BODY>
+
+</HTML>
+
