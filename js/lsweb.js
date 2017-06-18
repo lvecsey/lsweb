@@ -8,11 +8,33 @@ var VoteEnum = {
     DOWN: 1
 };
 
+function send_upvote(title, url) {
+
+    var request_obj = { vote: 'UP', title: title, url: url };
+
+    console.log('Sending upvote for title ' + title + ' and link ' + url);
+    
+$.ajax({
+  type: "POST",
+  url: '/cgi-bin/linkshare_processor',
+  data: JSON.stringify(request_obj),
+  success: function(data, textStatus, jqXHR) {
+
+      status_id.innerHTML = data;
+
+}
+});
+
+    
+}
+
 function add_clickqueue(clickval, title, url) {
 
     var vote_str = clickval == VoteEnum.UP ? 'upvote' : 'downvote';
     
     console.log('Adding ' + vote_str + ' to transfer queue.');
+
+    send_upvote(title, url);
     
 }
 
