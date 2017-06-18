@@ -8,7 +8,7 @@ var VoteEnum = {
     DOWN: 1
 };
 
-function add_clickqueue(clickval) {
+function add_clickqueue(clickval, title, url) {
 
     var vote_str = clickval == VoteEnum.UP ? 'upvote' : 'downvote';
     
@@ -37,9 +37,15 @@ function lsweb_show_entry(entry, bgcolor) {
 
     var str = '';
 
-    str += '<TR BGCOLOR="' + bgcolor + '"><TD COLSPAN="4"><A HREF="javascript:add_clickqueue(VoteEnum.UP)">' + uparrow + '</A></TD></TR>';
+    var javascript_uplink, javascript_downlink;
+
+    javascript_uplink = 'javascript:add_clickqueue(VoteEnum.UP, \'' + entry.title + '\', \'' + entry.url + '\')';
+
+    javascript_downlink = 'javascript:add_clickqueue(VoteEnum.DOWN, \'' + entry.title + '\', \'' + entry.url + '\')';    
+    
+    str += '<TR BGCOLOR="' + bgcolor + '"><TD COLSPAN="4"><A HREF="' + javascript_uplink + '">' + uparrow + '</A></TD></TR>';
     str += '<TR BGCOLOR="' + bgcolor + '"><TD>&nbsp;</TD><TD COLSPAN="3"><a href="' + entry.url + '">' + entry.title + '</a></TD></TR>';
-    str += '<TR BGCOLOR="' + bgcolor + '"><TD COLSPAN="2"><A HREF="javascript:add_clickqueue(VoteEnum.DOWN)">' + downarrow + '</A></TD>';
+    str += '<TR BGCOLOR="' + bgcolor + '"><TD COLSPAN="2"><A HREF="' + javascript_downlink + '">' + downarrow + '</A></TD>';
 
     if (entry.sort) str += '<TD ALIGN="RIGHT">Votes:</TD><TD>' + parseInt(entry.sort, 16) + '</TD>';
     else str += '<TD COLSPAN="2">&nbsp;</TD>';
