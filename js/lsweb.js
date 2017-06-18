@@ -18,6 +18,14 @@ function add_clickqueue(clickval) {
 
 function cmp_entries(a, b) {
 
+    if (a.sort && b.sort) {
+
+	if (a.sort < b.sort) return -1;
+	if (a.sort > b.sort) return 1;
+	return 0;
+	
+    }
+    
     if (a.title < b.title) return -1;
     if (a.title > b.title) return 1;
 
@@ -31,7 +39,11 @@ function lsweb_show_entry(entry, bgcolor) {
 
     str += '<TR BGCOLOR="' + bgcolor + '"><TD COLSPAN="3"><A HREF="javascript:add_clickqueue(VoteEnum.UP)">' + uparrow + '</A></TD></TR>';
     str += '<TR BGCOLOR="' + bgcolor + '"><TD>&nbsp;</TD><TD><a href="' + entry.url + '">' + entry.title + '</a></TD></TR>';
-    str += '<TR BGCOLOR="' + bgcolor + '"><TD COLSPAN="3"><A HREF="javascript:add_clickqueue(VoteEnum.DOWN)">' + downarrow + '</A></TD></TR>';
+    str += '<TR BGCOLOR="' + bgcolor + '"><TD COLSPAN="3"><A HREF="javascript:add_clickqueue(VoteEnum.DOWN)">' + downarrow + '</A></TD>';
+
+    if (entry.sort) str += '<TD ALIGN="RIGHT">Votes:</TD><TD>' + entry.sort + '</TD>';
+    
+    str += '</TR>';
 
     return str;
     
