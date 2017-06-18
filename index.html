@@ -33,6 +33,8 @@ $.ajax({
 
   var entries = $.parseJSON(data);
 
+  entries.sort(cmp_entries);
+
   element_id.innerHTML = lsweb_draw_table(entries);
 
 }
