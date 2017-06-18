@@ -21,6 +21,8 @@
 
 var element_id;
 
+var status_id;
+
 function process_ajax() {
 
 var request_obj = { search: 'Programming', num_entries: 100 };
@@ -50,6 +52,7 @@ $( document ).ready(function() {
     console.log( "LinkShare ready!" );
 
     element_id = document.getElementById("linkshare");
+    status_id = document.getElementById("linkshare_status");
 
     process_ajax();
 
@@ -60,6 +63,12 @@ $( document ).ready(function() {
 
     <hr>
 
+    <SPAN ID="linkshare_status">
+      [Status]
+    </SPAN>
+
+    <br>
+    
     <a href="linkshare_submitform.html">Submit a URL</a> to Link Share.<br>
 
     Download from the <a href="https://github.com/lvecsey/linkshare">linkshare github repo</a>.<br>
