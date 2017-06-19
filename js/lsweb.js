@@ -28,7 +28,9 @@ function local_upvote(title, url) {
 
 	    var sortnum = parseInt(entries[n].sort, 16);
 	    
-	    sortnum++;
+	    if (sortnum < 16777215) {
+		sortnum++;
+	    }
 	    
 	    entries[n].sort = sortnum.toString(16);
 
@@ -54,7 +56,9 @@ function local_downvote(title, url) {
 
 	    var sortnum = parseInt(entries[n].sort, 16);
 	    
-	    sortnum--;
+	    if (sortnum > 0) {
+		sortnum--;
+	    }
 	    
 	    entries[n].sort = sortnum.toString(16);
 
