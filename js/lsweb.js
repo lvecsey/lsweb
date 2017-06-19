@@ -8,11 +8,89 @@ var VoteEnum = {
     DOWN: 1
 };
 
+function linkshare_repaint() {
+
+  element_id.innerHTML = lsweb_draw_table(entries);
+    
+}
+
+function local_upvote(title, url) {
+
+    var n;
+
+    if (entries == null) {
+	return -1;
+    }
+    
+    for (n = 0; n < entries.length; n++) {
+
+	if ((true == (entries[n].title == title)) && ((true == (entries[n].url == url)))) {
+
+	    var sortnum = parseInt(entries[n].sort, 16);
+	    
+	    sortnum++;
+	    
+	    entries[n].sort = sortnum.toString(16);
+
+	}
+    
+    }
+
+    return 0;
+    
+}
+
+function local_downvote(title, url) {
+
+    var n;
+
+    if (entries == null) {
+	return -1;
+    }
+    
+    for (n = 0; n < entries.length; n++) {
+
+	if ((true == (entries[n].title == title)) && ((true == (entries[n].url == url)))) {
+
+	    var sortnum = parseInt(entries[n].sort, 16);
+	    
+	    sortnum--;
+	    
+	    entries[n].sort = sortnum.toString(16);
+
+	}
+    
+    }
+
+    return 0;
+    
+}
+
 function send_upvote(title, url) {
 
     var request_obj = { vote: 'UP', title: title, url: url };
 
     console.log('Sending upvote for title ' + title + ' and link ' + url);
+    
+$.ajax({
+  type: "POST",
+  url: '/cgi-bin/linkshare_processor',
+  data: JSON.stringify(request_obj),
+  success: function(data, textStatus, jqXHR) {
+
+      status_id.innerHTML = data;
+
+}
+});
+
+    
+}
+
+function send_downvote(title, url) {
+
+    var request_obj = { vote: 'DOWN', title: title, url: url };
+
+    console.log('Sending downvote for title ' + title + ' and link ' + url);
     
 $.ajax({
   type: "POST",
@@ -34,8 +112,19 @@ function add_clickqueue(clickval, title, url) {
     
     console.log('Adding ' + vote_str + ' to transfer queue.');
 
-    send_upvote(title, url);
-    
+    switch(clickval) {
+    case VoteEnum.UP: 
+	send_upvote(title, url);
+	local_upvote(title, url);
+	break;
+    case VoteEnum.DOWN:
+	send_downvote(title, url);
+	local_downvote(title, url);
+	break;
+    }
+
+    linkshare_repaint();
+	
 }
 
 function cmp_entries(a, b) {
